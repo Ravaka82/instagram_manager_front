@@ -1,0 +1,78 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+}
+.login-box {
+    width: 350px;
+    padding: 20px;
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    border: 1px solid #f3f3f3;
+}
+.login-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.login-title {
+    color: #636363;
+    font-size: 26px;
+}
+.login-body .form-group {
+    margin-bottom: 20px;
+}
+.login-body .form-control {
+    min-height: 38px;
+    padding-left: 5px;
+    box-shadow: none !important;
+    border-width: 0 0 1px 0;
+    border-radius: 0;
+}
+.login-body .form-control:focus {
+    border-color: #ccc;
+}
+.login-body .input-group-addon {
+    max-width: 42px;
+    text-align: center;
+    background: none;
+    border-bottom: 1px solid #ced4da;
+    padding-right: 5px;
+    border-radius: 0;
+}
+.login-body .btn, .login-body .btn:active {        
+    font-size: 16px;
+    font-weight: bold;
+    background: #435d7d !important;
+    border-radius: 3px;
+    border: none;
+    min-width: 140px;
+}
+.login-body .btn:hover, .login-body .btn:focus {
+    background: #179b81 !important;
+}
+.hint-text {
+    text-align: center;
+    padding-top: 5px;
+    font-size: 13px;
+}
+.login-footer {
+    color: #999;
+    text-align: center;
+    font-size: 13px;
+    margin-top: 20px;
+}
+.login-footer a {
+    color: #179b81;
+    text-decoration: none;
+}	
+.login-footer a:hover {
+    text-decoration: underline;
+}
+.login-box .fa {
+    font-size: 21px;
+    position: relative;
+    top: 6px;
+}
