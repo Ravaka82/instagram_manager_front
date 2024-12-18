@@ -29,7 +29,7 @@ const Login = () => {
             localStorage.setItem('token', response.data.access);
             localStorage.setItem('username', response.data.username);
             localStorage.setItem('iduser', response.data.id);
-            //navigate('/tache');
+            navigate('/home');
 
         } catch (err) {
             console.error('Erreur lors de la connexion:', err);
