@@ -6,18 +6,23 @@ import "./Home.css";
 
 function Home() {
   const [showModal, setShowModal] = useState(false); 
+  const [showModalModif, setShowModalModif] = useState(false); 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState(""); 
   const [accounts, setAccounts] = useState([]); 
-
+  const [selectedAccount, setSelectedAccount] = useState({});
+  const [selectedFile, setSelectedFile] = useState(null);
   const handleShowModal = () => setShowModal(true); 
+
   const handleCloseModal = () => setShowModal(false); 
+  const handleCloseModalModif = () => setShowModalModif(false); 
 
   const handleCreateAccount = async () => {
     const userData = {
       username: username,
       password: password,
     };
+ 
 
     try {
       const response = await fetch("http://127.0.0.1:8000/api-instagram/register_instagram_user", {
@@ -42,6 +47,16 @@ function Home() {
     handleCloseModal(); // Ferme le modal après l'action
   };
 
+  const handleSelectAccount = (account) => {
+    setSelectedAccount(account);
+    setShowModalModif(true);
+  };
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
+
+
   useEffect(() => {
     const fetchAccounts = async () => {
       try {
@@ -55,6 +70,8 @@ function Home() {
 
     fetchAccounts();
   }, []); // L'effet est exécuté une seule fois au montage du composant
+
+
 
   return (
     <div className="container py-5">
@@ -105,7 +122,9 @@ function Home() {
                       <FaPlus className="text-white me-1" />
                       Ajouter une publication
                     </button>
-                    <button className="btn btn-warning btn-sm shadow-sm">
+                    <button 
+                    className="btn btn-warning btn-sm shadow-sm"
+                    onClick={() => handleSelectAccount(account)} >
                       <FaEdit className="text-white me-1" />
                       Modifier
                     </button>
@@ -122,7 +141,7 @@ function Home() {
       </section>
 
       {/* Modal pour la création de compte */}
-      <Modal show={showModal} onHide={handleCloseModal}>
+      <Modal show={showModalModif} onHide={handleCloseModalModif}>
         <Modal.Header closeButton>
           <Modal.Title>Création de compte</Modal.Title>
         </Modal.Header>
@@ -154,6 +173,79 @@ function Home() {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseModal}>
+            Annuler
+          </Button>
+          <Button variant="primary" onClick={handleCreateAccount}>
+            Créer le compte
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+       {/* Modal pour modifier de compte */}
+       <Modal show={showModalModif} onHide={handleCloseModalModif}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modification compte</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form>
+            <div className="mb-3">
+              <label htmlFor="username" className="form-label">Nom d'utilisateur</label>
+              <input 
+                type="text" 
+                className="form-control" 
+                id="username" 
+                placeholder="Nom d'utilisateur" 
+                defaultValue={selectedAccount?.username || ''} 
+                // Mettre à jour l'état
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="profil_picture" className="form-label">Image</label>
+              <input
+                type="file"
+                className="form-control"
+                id="profile_picture"
+                onChange={handleFileChange}
+              />
+               {selectedAccount?.profile_picture && !selectedFile && (
+              <div>
+                <p>Current profile picture:</p>
+                <img
+                  src={selectedAccount.profile_picture}
+                  alt="Profile"
+                  style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                />
+              </div>
+            )}
+            {selectedFile && (
+              <div>
+                <p>Selected file:</p>
+                <p>{selectedFile.name}</p>
+              </div>
+            )}
+            </div>
+            <div className="mb-3">
+              <label htmlFor="profil_picture" className="form-label">Bio</label>
+              <input 
+                type="text" 
+                className="form-control" 
+                id="profil_picture" 
+                defaultValue={selectedAccount?.bio} 
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="profil_picture" className="form-label">Lien bio</label>
+              <input 
+                type="text" 
+                className="form-control" 
+                id="profil_picture" 
+                defaultValue={selectedAccount?.bio_link} 
+              />
+            </div>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModalModif}>
             Annuler
           </Button>
           <Button variant="primary" onClick={handleCreateAccount}>
